@@ -8,7 +8,19 @@ This directory contains repository-facing copies of the revision-specific sensit
 - `hap_only_sensitivity.py` — excludes all adjudicated VAP cases and compares the 11-predictor HAP-only models with the corresponding 9-predictor models after removal of mechanical ventilation and intubation/tracheotomy.
 - `temporal_robustness.py` — development-period (2020-2023) versus later-period (2024-2025) temporal robustness analysis using the eight primary algorithms.
 - `followup_opportunity_sensitivity.py` — evaluates discrimination and calibration across recorded remaining-ICU-stay strata using locked Primary11 GBDT and LR probabilities; models are not refitted within strata.
-- `parsimonious_comparator.py` — reproduces the downstream fixed-test performance comparisons, paired bootstrap differences, and paired DeLong/Holm tests from the locked parsimonious-comparator prediction file.
+- `parsimonious_comparator_training.py` — reconstructs the upstream fitting of the four simple logistic-regression comparator specifications from the governed analysis-ready cohort.
+- `parsimonious_comparator.py` — reproduces the downstream fixed-test performance comparisons, paired bootstrap differences, and paired DeLong/Holm tests from the locked comparator prediction file.
+
+## Parsimonious comparator reconstruction
+
+The four simple LR specifications are:
+
+1. mechanical ventilation + intubation/tracheotomy;
+2. NLR alone (`NEU / LYM`);
+3. age + sex as a component-level floor (not a reconstructed A2DS2 or ISAN score);
+4. NEU + LYM + mechanical ventilation.
+
+The upstream reconstruction preserves the fixed original internal split, applies training-derived min-max scaling to continuous variables, tunes L2 logistic regression by 10-fold stratified Bayesian cross-validation, and applies 10-fold Platt calibration in training. The resulting fixed-test probabilities can then be passed to `parsimonious_comparator.py` for the reported paired comparisons.
 
 ## Restricted data
 
@@ -31,4 +43,4 @@ Generated patient-level CSV files, serialized model objects, checkpoints, and re
 
 ## Reproducibility scope
 
-These public copies preserve the statistical/modeling logic of the revision analyses while replacing workstation-specific absolute paths with portable restricted-data and output locations. The parsimonious comparator script operates from the locked patient-level prediction file used in the revision; it reproduces the reported downstream comparisons but does not independently reconstruct the upstream fitting of the four simple LR comparator specifications.
+These public copies preserve the statistical/modeling logic of the revision analyses while replacing workstation-specific absolute paths with portable restricted-data and output locations. Reconstructed outputs may differ slightly across software versions because Bayesian optimization, calibration, and stochastic estimators can be version-sensitive; archived point estimates in the manuscript remain the reporting reference.
