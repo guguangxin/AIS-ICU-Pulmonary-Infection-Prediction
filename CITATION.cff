@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the software release and the associated manuscript."
+title: "AIS-ICU-Pulmonary-Infection-Prediction"
+type: software
+version: 1.0.0
+authors:
+  - family-names: Gu
+    given-names: Guangxin
+  - family-names: Gu
+    given-names: Hongwen
+  - family-names: Gao
+    given-names: Yan
+  - family-names: Wang
+    given-names: Ruiwen
+  - family-names: Wang
+    given-names: Yu
+  - family-names: Yu
+    given-names: Hailong
+  - family-names: Li
+    given-names: Xuelian
+  - family-names: Wang
+    given-names: Sha
+repository-code: "https://github.com/guguangxin/AIS-ICU-Pulmonary-Infection-Prediction"
+license: MIT
+keywords:
+  - acute ischemic stroke
+  - intensive care unit
+  - hospital-acquired pneumonia
+  - ventilator-associated pneumonia
+  - machine learning
+  - clinical prediction
