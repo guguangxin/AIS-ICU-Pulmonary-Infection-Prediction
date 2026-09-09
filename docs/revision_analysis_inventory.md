@@ -36,20 +36,14 @@ The public repository now includes both stages of the parsimonious analysis:
 
 The four specifications are MV + intubation/tracheotomy, NLR alone (NEU/LYM), age + sex as a component-level floor, and NEU + LYM + MV. The age-sex model is not presented as a reconstructed A2DS2 or ISAN score.
 
-## Remaining traceability item before the final archived release
+## Historical nine-predictor optimism traceability (Supplementary Table S14)
 
-### Historical nine-predictor optimism analysis (Supplementary Table S14)
+Supplementary Table S14 is now covered by `code/07_historical_nine_predictor_traceability/`. The public script is deliberately labeled as a **reconstruction**, not as the recovered original generation script. It reconstructs the archived 1,000-resample fixed-hyperparameter bootstrap optimism procedure for the earlier nine-predictor GBDT and LightGBM base estimators.
 
-Supplementary Table S14 retains a historical fixed-hyperparameter bootstrap optimism analysis for the earlier nine-predictor GBDT and LightGBM models. It is explicitly retained only for analysis traceability and is not used as the uncertainty estimate for the current 11-predictor primary analysis.
+The reconstruction uses the previously selected hyperparameter values retained in the archived Supplementary Table S2. The full-precision historical `BayesSearchCV.best_params_` export was not located; several continuous selected values are therefore available only at the precision displayed in the archived table. Small numerical differences caused by parameter rounding and software-version differences are expected and are documented rather than hidden. Archived S14 values are used only as QA anchors and do not generate the reconstructed estimates.
 
-Before the final GitHub Release / Zenodo archive, do one of the following:
+This historical analysis is retained solely for traceability and is **not** used as an uncertainty estimate for the current 11-predictor primary analysis.
 
-1. add the archived S14 optimism script if it can be recovered;
-2. add a clearly labeled reconstruction script that reproduces the historical procedure from the authorized archive; or
-3. remove S14 from the Supplementary Material if the historical traceability analysis is no longer needed.
+## Release readiness
 
-Do not imply that a newly written reconstruction script is the original historical generation code unless that can be verified.
-
-## Release rule
-
-Do not create the final GitHub Release or Zenodo archive until the S14 traceability item above has been resolved or explicitly removed from the reported Supplementary Material.
+The previously identified public-code gaps now have either repository-facing analysis scripts or explicit reconstruction instructions. Before creating the final GitHub Release / Zenodo archive, perform one repository-level audit for: directory structure, accidental patient-level files, workstation-specific absolute paths, syntax/smoke-test status, and consistency of the README, Data Availability statement, reviewer response, and Supplementary Table S17.

@@ -140,6 +140,20 @@ These analyses are historical and exploratory. The BSA-inclusive 10-predictor se
 
 The public historical scripts preserve the archived workflow while replacing workstation-specific absolute paths. Patient-level data, patient-level predictions, and fitted model objects are not distributed publicly.
 
+## Historical nine-predictor optimism reconstruction (Supplementary Table S14)
+
+Run:
+
+```bash
+python code/07_historical_nine_predictor_traceability/historical_9predictor_bootstrap_optimism.py \
+  --input /path/to/authorized/analysis_ready.csv \
+  --bootstrap 1000
+```
+
+This is a reconstruction of a historical traceability analysis, not a recovered copy of the original generation script. It uses the earlier nine-predictor BSA-free specification (NEU, intubation/tracheotomy, MV, LDH, LYM, BUN, CCI, FIB, and surgery) and the selected GBDT/LightGBM hyperparameter values retained in the archived Supplementary Table S2. Hyperparameters are held fixed; each bootstrap-fitted base estimator is evaluated both in its bootstrap sample and in the complete original training cohort, and optimism is the difference in AUC. Mean optimism is subtracted from the original apparent training AUC.
+
+The bundled historical parameter JSON uses continuous values at the precision displayed in the archived table because a full-precision historical `best_params_` export was not located. The script therefore reports archived S14 values only as QA anchors and documents possible small deviations from parameter rounding or library-version differences. S14 is retained for historical traceability only and is not an uncertainty estimate for the current Primary11 models.
+
 ## Repeated nested resampling
 
 The repeated nested analysis is intentionally split into R and Python stages under `code/05_repeated_nested_validation/`.
