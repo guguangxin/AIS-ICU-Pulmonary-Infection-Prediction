@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Table 1 generator for the AIS-ICU pulmonary-infection study.
+Table 1 and Supplementary Table S32 generator for the AIS-ICU pulmonary-infection study.
 
 Purpose
 -------
-Reproduce the descriptive baseline/candidate-predictor table used in the revised
-manuscript from the completed analysis-ready cohort.
+Reproduce the concise main Table 1 and the additional first-48-hour intervention/medication block moved to Supplementary Table S32 from the completed analysis-ready cohort.
 
 Statistics
 ----------
@@ -44,8 +43,8 @@ ID_COL = "Study_row_id"
 EXPECTED_N = 3368
 EXPECTED_EVENTS = 1357
 
-# Exact current Table 1 order.
-VARIABLES = [
+# Full candidate-variable inventory.
+ALL_VARIABLES = [
     {"name": "Age", "label": "Age", "type": "continuous", "digits": 0},
     {
         "name": "Sex", "label": "Sex", "type": "categorical",
@@ -198,6 +197,43 @@ VARIABLES = [
     },
 ]
 
+# Reviewer-requested presentation split: these additional intervention/medication
+# candidate variables are reported in Supplementary Table S32 rather than the
+# concise main Table 1. Primary predictors such as surgery, MV,
+# intubation/tracheotomy, and diuretics remain in the main table.
+S32_NAMES = {
+    "Central_venous_catheter",
+    "CRRT",
+    "Immunosuppressants",
+    "Anticholinergics",
+    "Anticholinesterases",
+    "Benzodiazepines",
+    "Non_benzodiazepines",
+    "Antipsychotics",
+    "Vasoactive_agents",
+    "Broad_spectrum_antibiotics",
+}
+
+S32_LABELS = {
+    "Central_venous_catheter": "Central venous catheter (CVC) within first 48 h",
+    "CRRT": "Continuous renal replacement therapy (CRRT) within first 48 h",
+    "Immunosuppressants": "Immunosuppressants within first 48 h",
+    "Anticholinergics": "Anticholinergic agents within first 48 h",
+    "Anticholinesterases": "Cholinesterase inhibitors within first 48 h",
+    "Benzodiazepines": "Benzodiazepines within first 48 h",
+    "Non_benzodiazepines": "Non-benzodiazepine sedatives within first 48 h",
+    "Antipsychotics": "Antipsychotics within first 48 h",
+    "Vasoactive_agents": "Vasoactive agents within first 48 h",
+    "Broad_spectrum_antibiotics": "Broad-spectrum antibiotics (BSA) within first 48 h",
+}
+
+MAIN_TABLE1_VARIABLES = [x for x in ALL_VARIABLES if x["name"] not in S32_NAMES]
+S32_VARIABLES = [
+    {**x, "label": S32_LABELS[x["name"]]}
+    for x in ALL_VARIABLES
+    if x["name"] in S32_NAMES
+]
+
 
 def read_csv_flexible(path: Path) -> pd.DataFrame:
     last_error = None
@@ -287,7 +323,7 @@ def validate(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     df.columns = df.columns.astype(str).str.replace("\ufeff", "", regex=False).str.strip()
 
-    required = {OUTCOME, ID_COL, *(v["name"] for v in VARIABLES)}
+    required = {OUTCOME, ID_COL, *(v["name"] for v in ALL_VARIABLES)}
     missing = sorted(required - set(df.columns))
     if missing:
         raise ValueError(f"Missing required columns: {missing}")
@@ -304,7 +340,7 @@ def validate(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def build_table(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+def build_table(df: pd.DataFrame, variables: list[dict]) -> tuple[pd.DataFrame, pd.DataFrame]:
     n_total = len(df)
     n0 = int((df[OUTCOME] == 0).sum())
     n1 = int((df[OUTCOME] == 1).sum())
@@ -312,7 +348,7 @@ def build_table(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     display_rows: list[dict] = []
     audit_rows: list[dict] = []
 
-    for spec in VARIABLES:
+    for spec in variables:
         var = spec["name"]
         label = spec["label"]
 
@@ -376,20 +412,25 @@ def markdown_table(df: pd.DataFrame) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate revised manuscript Table 1.")
+    parser = argparse.ArgumentParser(description="Generate revised main Table 1 and Supplementary Table S32.")
     parser.add_argument("--input", required=True, type=Path, help="Restricted analysis-ready CSV.")
     parser.add_argument("--output-dir", type=Path, default=Path("outputs/table1"))
     args = parser.parse_args()
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     df = validate(read_csv_flexible(args.input))
-    table, audit = build_table(df)
+    table, audit_main = build_table(df, MAIN_TABLE1_VARIABLES)
+    table_s32, audit_s32 = build_table(df, S32_VARIABLES)
+    audit = pd.concat([audit_main, audit_s32], ignore_index=True)
 
     table_csv = args.output_dir / "Table1_baseline_characteristics.csv"
-    audit_csv = args.output_dir / "Table1_statistical_audit.csv"
+    table_s32_csv = args.output_dir / "Table_S32_additional_first48h_intervention_medication_candidates.csv"
+    audit_csv = args.output_dir / "Table1_and_S32_statistical_audit.csv"
     table_md = args.output_dir / "Table1_baseline_characteristics.md"
+    table_s32_md = args.output_dir / "Table_S32_additional_first48h_intervention_medication_candidates.md"
 
     table.to_csv(table_csv, index=False, encoding="utf-8-sig")
+    table_s32.to_csv(table_s32_csv, index=False, encoding="utf-8-sig")
     audit.to_csv(audit_csv, index=False, encoding="utf-8-sig")
 
     note = (
@@ -406,6 +447,20 @@ def main() -> None:
         encoding="utf-8",
     )
 
+    note_s32 = (
+        "\n\nNote. Values are n (%). These are first-48-hour indicators, not full-ICU-course prevalences. "
+        "BSA was excluded before primary feature selection because its timing relative to infection suspicion "
+        "could not be reconstructed reliably. Immunosuppressants were all zero; cholinesterase inhibitors "
+        "were zero in the fixed training set and were removed by the corresponding zero-variance rules. "
+        "P values are unadjusted and descriptive.\n"
+    )
+    table_s32_md.write_text(
+        "# Table S32. Additional first-48-hour intervention and medication candidate variables\n\n"
+        + markdown_table(table_s32)
+        + note_s32,
+        encoding="utf-8",
+    )
+
     # Auditable manuscript checks.
     checks = audit.set_index("Variable")
     assert abs(float(checks.loc["K", "P_value_raw"]) - 0.4077368338693862) < 1e-12
@@ -416,8 +471,10 @@ def main() -> None:
 
     print(f"Validated cohort: n={len(df)}, events={int(df[OUTCOME].sum())}")
     print(f"Saved: {table_csv}")
+    print(f"Saved: {table_s32_csv}")
     print(f"Saved: {audit_csv}")
     print(f"Saved: {table_md}")
+    print(f"Saved: {table_s32_md}")
     print("Key audit check: potassium Mann-Whitney P=0.4077368 -> displays as 0.408")
 
 

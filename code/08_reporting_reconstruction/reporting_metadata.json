@@ -1,0 +1,1238 @@
+{
+  "schema_version": 1,
+  "source": "Final revision aggregate metadata; no patient-level records included",
+  "tables": {
+    "S1": {
+      "title": "Summary of missing data for the 38 candidate predictor variables.",
+      "columns": [
+        "Variable Name",
+        "Missing Count",
+        "Missing Rate"
+      ],
+      "rows": [
+        [
+          "HbA1c",
+          "902",
+          "26.78%"
+        ],
+        [
+          "BUN",
+          "712",
+          "21.14%"
+        ],
+        [
+          "SCr",
+          "712",
+          "21.14%"
+        ],
+        [
+          "ALT",
+          "704",
+          "20.90%"
+        ],
+        [
+          "ALB",
+          "646",
+          "19.18%"
+        ],
+        [
+          "LDH",
+          "627",
+          "18.62%"
+        ],
+        [
+          "Hb",
+          "420",
+          "12.47%"
+        ],
+        [
+          "LYM",
+          "420",
+          "12.47%"
+        ],
+        [
+          "NEU",
+          "420",
+          "12.47%"
+        ],
+        [
+          "PLT",
+          "420",
+          "12.47%"
+        ],
+        [
+          "RBC",
+          "420",
+          "12.47%"
+        ],
+        [
+          "WBC",
+          "420",
+          "12.47%"
+        ],
+        [
+          "FIB",
+          "408",
+          "12.11%"
+        ],
+        [
+          "INR",
+          "408",
+          "12.11%"
+        ],
+        [
+          "Cl",
+          "398",
+          "11.82%"
+        ],
+        [
+          "Na",
+          "398",
+          "11.82%"
+        ],
+        [
+          "TCO2",
+          "398",
+          "11.82%"
+        ],
+        [
+          "K",
+          "397",
+          "11.79%"
+        ],
+        [
+          "CCI",
+          "3",
+          "0.09%"
+        ],
+        [
+          "Admission type",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Age",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Anticholinergics",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Antipsychotics",
+          "0",
+          "0.00%"
+        ],
+        [
+          "BSA",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Benzodiazepines",
+          "0",
+          "0.00%"
+        ],
+        [
+          "CRRT",
+          "0",
+          "0.00%"
+        ],
+        [
+          "CVC",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Cholinesterase inhibitors",
+          "0",
+          "0.00%"
+        ],
+        [
+          "DM",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Diuretics",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Heart disease",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Immunosuppressants",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Intubation",
+          "0",
+          "0.00%"
+        ],
+        [
+          "MV",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Non-benzodiazepines",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Sex",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Surgery",
+          "0",
+          "0.00%"
+        ],
+        [
+          "Vasoactive agents",
+          "0",
+          "0.00%"
+        ]
+      ],
+      "note": "Historical missingness is reconstructed from archived aggregate revision metadata because the pre-imputation raw matrix is not distributed and was not retained in the revision archive."
+    },
+    "S3": {
+      "title": "Historical descriptive stability summary for the original BSA-inclusive Boruta selection across 20 runs (retained for traceability; revised fully specified BSA-free stability results are reported in Table S25).",
+      "columns": [
+        "Variable",
+        "Confirmed_Count",
+        "Rejected_Count",
+        "Tentative_Count",
+        "Selection_Frequency",
+        "Stability_Class"
+      ],
+      "rows": [
+        [
+          "Surgery",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "MV",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Intubation",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "CRRT",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Anticholinergics",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Non-benzodiazepines",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "BSA",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Diuretics",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Age",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "CCI",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "WBC",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "NEU",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "LYM",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Hb",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "PLT",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "INR",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "FIB",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "ALB",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "SCr",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "BUN",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "ALT",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Na",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "K",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Cl",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "TCO2",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "RBC",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "LDH",
+          "20",
+          "0",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Antipsychotics",
+          "12",
+          "0",
+          "8",
+          "0.6",
+          "Tentatively selected (50%-80%)"
+        ],
+        [
+          "Sex",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "CVC",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "DM",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Heart disease",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Immunosuppressants",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Cholinesterase inhibitors",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Benzodiazepines",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Vasoactive agents",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Admission type",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "HbA1c",
+          "0",
+          "20",
+          "0",
+          "0.0",
+          "Stably rejected (<20%)"
+        ]
+      ],
+      "note": "Historical aggregate traceability table; it is not the current BSA-free feature-selection stability analysis."
+    },
+    "S4": {
+      "title": "Historical descriptive stability summary for the original BSA-inclusive LASSO selection across 20 runs (retained for traceability; revised fully specified BSA-free stability results are reported in Table S25).",
+      "columns": [
+        "Variable",
+        "Selected_Count",
+        "Not_Selected_Count",
+        "Selection_Frequency",
+        "Stability_Class"
+      ],
+      "rows": [
+        [
+          "Surgery",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "MV",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Intubation",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "BSA",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "CCI",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "NEU",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "LYM",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "FIB",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "BUN",
+          "20",
+          "0",
+          "1.0",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "LDH",
+          "19",
+          "1",
+          "0.95",
+          "Stably selected (≥80%)"
+        ],
+        [
+          "Age",
+          "2",
+          "18",
+          "0.1",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Sex",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "CVC",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "CRRT",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "DM",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Heart disease",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Immunosuppressants",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Anticholinergics",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Cholinesterase inhibitors",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Benzodiazepines",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Non-benzodiazepines",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Antipsychotics",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Vasoactive agents",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Diuretics",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Admission type",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "WBC",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Hb",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "PLT",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "INR",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "ALB",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "SCr",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "ALT",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "HbA1c",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Na",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "K",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "Cl",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "TCO2",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ],
+        [
+          "RBC",
+          "0",
+          "20",
+          "0.0",
+          "Stably rejected (<20%)"
+        ]
+      ],
+      "note": "Historical aggregate traceability table; it is not the current BSA-free feature-selection stability analysis."
+    },
+    "S16": {
+      "title": "Component-level comparison of A2DS2, ISAN, and the current 11-predictor primary model, with data-availability constraints for direct score reconstruction.",
+      "columns": [
+        "Component / domain",
+        "A2DS2",
+        "ISAN",
+        "Current 11-predictor primary model",
+        "Availability / implication in the present dataset"
+      ],
+      "rows": [
+        [
+          "Age",
+          "Included",
+          "Included",
+          "Not selected",
+          "Available; evaluated as a candidate but not retained."
+        ],
+        [
+          "Sex",
+          "Included (male sex)",
+          "Included",
+          "Not selected",
+          "Available; evaluated as a candidate but not retained."
+        ],
+        [
+          "Atrial fibrillation",
+          "Included",
+          "Not included",
+          "Not included",
+          "No specific AF field; heart disease was not used as a proxy."
+        ],
+        [
+          "Dysphagia / standardized swallowing assessment",
+          "Included",
+          "Not included",
+          "Not included",
+          "Not routinely standardized; A2DS2 could not be reconstructed."
+        ],
+        [
+          "Admission NIHSS / stroke severity",
+          "Included",
+          "Included",
+          "Not included",
+          "Not routinely standardized; neither A2DS2 nor ISAN could be reconstructed."
+        ],
+        [
+          "Prestroke functional independence (modified Rankin Scale)",
+          "Not included",
+          "Included",
+          "Not included",
+          "No standardized prestroke functional-independence field; ISAN could not be reconstructed."
+        ],
+        [
+          "Inflammatory / hematologic markers",
+          "Not included",
+          "Not included",
+          "NEU, LYM, FIB",
+          "Available and retained."
+        ],
+        [
+          "Biochemical / comorbidity markers",
+          "Not included",
+          "Not included",
+          "BUN, LDH, TCO2, CCI",
+          "Available and retained."
+        ],
+        [
+          "Early treatment-support variables",
+          "Not included",
+          "Not included",
+          "Surgery, intubation/tracheotomy, MV",
+          "Available and retained; may partly reflect underlying illness severity."
+        ],
+        [
+          "Medication exposure",
+          "Not included",
+          "Not included",
+          "Diuretics",
+          "Available and retained as a first-48-hour binary exposure."
+        ]
+      ],
+      "note": "A2DS2 and ISAN were not directly reconstructed because required standardized score components were unavailable."
+    },
+    "S17": {
+      "title": "Reporting, reproducibility, and methodological-transparency summary for the revised primary analysis.",
+      "columns": [
+        "Domain",
+        "What was done / reported",
+        "Interpretation / limitation"
+      ],
+      "rows": [
+        [
+          "Prediction landmark and horizon",
+          "Eligibility required an ICU length of stay of at least 48 hours. The prediction landmark was the end of the first 48 hours after ICU admission; operationally, the estimand was the probability of a later-documented HAP/VAP event after the landmark and before ICU exit.",
+          "The observation window varies with remaining ICU stay and is not a fixed 7-day or 14-day incidence probability. Standardized exact infection-onset, ICU-exit, and death times were not retained, so fixed-horizon or competing-risk redefinition was not reliable; incipient infection at the landmark cannot be excluded."
+        ],
+        [
+          "Outcome adjudication and subtype assignment",
+          "Two attending neurologists independently reviewed clinical progress notes, chest radiographs/CT, temperature, WBC, sputum or respiratory-secretions, oxygenation, and intubation/MV timing. The pneumonia index time was the earliest documented concurrence of a new/progressive radiographic infiltrate and compatible clinical infection evidence. Reviewers were blinded to model outputs; disagreements were resolved by a third senior neurologist (chief physician).",
+          "Formal inter-reviewer agreement (e.g., Cohen's kappa) was not calculated. Reviewers necessarily had access to the clinical record required for diagnosis and temporal classification. Residual reviewer-dependent outcome misclassification remains possible."
+        ],
+        [
+          "Outcome prevalence and class imbalance",
+          "Overall event prevalence was 40.29%; training and fixed internal test sets each had approximately 40% events. No synthetic oversampling, undersampling, or SMOTE-type resampling was used.",
+          "Stratified split/CV preserved prevalence. RF allowed class_weight=balanced or none; the selected primary RF used none. Other algorithms used standard unweighted objectives."
+        ],
+        [
+          "Internal evaluation and thresholding",
+          "A 70:30 stratified split was created before preprocessing. Current 11-predictor hyperparameters/calibration were fitted in training; final operating thresholds were derived from strict outer-10-fold cross-fitted calibrated training probabilities with hyperparameters fixed from the full-training Bayesian search.",
+          "The fixed test set was previously accessed during iterative revision and is a standardized internal comparison set. Threshold cross-fitting is not a fully nested estimate of the complete development process."
+        ],
+        [
+          "Calibration and uncertainty",
+          "Brier score, calibration intercept and slope, Hosmer-Lemeshow test, ECE, MCE, calibration plots, and bootstrap uncertainty were reported.",
+          "Calibration plots used 10 risk groups with 1,000 patient-level bootstrap resamples to obtain 95% pointwise intervals."
+        ],
+        [
+          "Sensitivity analysis / temporal robustness",
+          "HAP-only models used the current 11 predictors and were repeated after removing MV/intubation (9 predictors). Current 11-predictor GBDT/LR probabilities were evaluated across remaining-ICU-stay strata. Models were also refitted in 2020-2023 and tested in 2024-2025 with the current 11-predictor set fixed.",
+          "These are post hoc internal robustness analyses. HAP-only addresses VAP/airway overlap; remaining-LOS analyses address observation opportunity descriptively; temporal splitting evaluates calendar-time robustness rather than independent validation."
+        ],
+        [
+          "Reporting / risk-of-bias framework",
+          "Reporting was guided by TRIPOD+AI [34]. PROBAST+AI [35] was used only as a framework for discussing methodological limitations; no formal PROBAST+AI risk-of-bias rating was assigned.",
+          "Key applicability concerns include single-center sampling, unavailable neurologic/severity variables, variable prediction horizon, outcome ascertainment without standardized microbiology fields, and lack of independent external validation."
+        ],
+        [
+          "Reproducibility and code",
+          "Python/R versions, major package versions, random seed, search spaces, selected hyperparameters, thresholds, and revision-specific analyses are documented.",
+          "Revision-specific scripts document analysis settings and are available from the corresponding author during peer review; patient-level data will not be included in public code files."
+        ],
+        [
+          "Fairness / subgroup evaluation",
+          "No formal algorithmic-fairness analysis was prespecified.",
+          "Future multicenter validation should evaluate discrimination, calibration, and downstream clinical consequences across clinically relevant demographic and clinical subgroups before implementation."
+        ],
+        [
+          "Patient exclusions and missing-data handling",
+          "Sequential screening counts are reported in Supplementary Figure S1 and Table S24. The two late-stage exclusion blocks were retained in the revision archive as grouped totals (n=232 and n=311). Within the final included cohort, variables with >30% training-set missingness were excluded and variables with <=30% missingness were imputed using a training-fitted IterativeImputer with a Random Forest estimator, producing a single completed dataset.",
+          "Mutually exclusive component counts within the grouped 232- and 311-patient blocks, including the exact number of repeat admissions, were not recoverable from the archived screening log. Excluded-patient covariates were not retained in the analysis-ready dataset, so an included-versus-excluded comparison could not be reconstructed. Multiple imputation was not performed; imputation uncertainty was not propagated."
+        ],
+        [
+          "Feature-selection robustness and age sensitivity",
+          "BSA and the all-zero immunosuppressant field were excluded before current primary selection; cholinesterase-inhibitor exposure was removed by the general training-set zero-variance rule. Thirty-five candidates entered LASSO/Boruta and the intersection retained 11 predictors. Age was then forced into the 11-predictor set to create a 12-predictor sensitivity analysis.",
+          "The 11-variable intersection is the current primary set. Boruta confirmed age but LASSO shrank it to zero; forcing age did not consistently improve fixed internal test performance, and no AUC gain remained significant after Holm correction."
+        ],
+        [
+          "Repeated nested resampling after revision",
+          "Five repeats of stratified 5-fold outer resampling (25 outer folds) reran BSA-free zero-variance screening, LASSO/Boruta feature selection, outer-training scaling, inner 5-fold Bayesian tuning, 5-fold Platt calibration, and cross-fitted training-only Youden-threshold derivation for LR and GBDT before untouched outer-fold evaluation.",
+          "The archived input was already imputed and winsorized under the original workflow, so imputation models and winsorization limits could not be re-estimated inside outer folds. The analysis therefore validates the recoverable post-preprocessing pipeline, not the complete raw-data pipeline."
+        ],
+        [
+          "Predictor timing and coding",
+          "Laboratory predictors used the first available result within 48 hours. Surgery, MV, intubation/tracheotomy, and diuretics were first-48-hour indicators. TCO2 was the first available total carbon dioxide result within 48 hours.",
+          "Exact laboratory collection timestamps, procedure-specific surgical details, treatment duration, start/stop times, and active-at-landmark status were not retained in the analysis-ready archive. Thus, the sampling-time distribution and admission-versus-later breakdown cannot be reconstructed, and these predictors are window-level exposure markers."
+        ],
+        [
+          "Focused decision-curve reanalysis",
+          "Focused DCA used the current 11-predictor calibrated test probabilities at thresholds 0.25, 0.30, and 0.40 with 1,000 paired patient-level bootstrap resamples.",
+          "The range was introduced post hoc and is not a deployment threshold. Probabilities have a variable horizon to ICU exit; positive net benefit does not establish low resource burden or transportable clinical utility."
+        ],
+        [
+          "Parsimonious comparator analysis",
+          "Post hoc LR comparators (MV+intubation, NLR, age+sex, and NEU+LYM+MV) were compared with the current 11-predictor LR in the same fixed internal test partition.",
+          "The best three-variable comparator remained materially below the 11-predictor LR, supporting algorithmic parsimony but not extreme predictor reduction. The analysis is internal and post hoc."
+        ],
+        [
+          "Sparse-field, airway-timing, and source-data audit",
+          "The binary archive was re-audited for the fields questioned by the reviewer. First-48-hour prevalence was MV 333/3,368 (9.9%), intubation/tracheotomy 353/3,368 (10.5%), CVC 32/3,368 (1.0%), and CRRT 12/3,368 (0.4%). The recorded heart-disease flag was positive in 9 patients; immunosuppressants in 0 and cholinesterase inhibitors in 1. Among 334 VAP cases, 262 lacked a first-48-hour MV indicator and 230 lacked a first-48-hour intubation/tracheotomy indicator. Targeted source-record review was used for VAP subtype re-audit.",
+          "Intervention counts are predictor-window exposures rather than full-course unit prevalence. By the VAP definition, VAP cases lacking an early airway indicator received qualifying airway support later in the ICU course, although exact post-landmark start times were not retained in the revision extract. The sparse heart-disease flag is not treated as broad cardiac-comorbidity prevalence or an AF surrogate. The all-zero/one-positive medication fields were a historical candidate-inventory oversight; training zero-variance fields were removed in revision-specific re-selection. A full raw-data re-extraction was not performed."
+        ]
+      ],
+      "note": "This table is a reporting/transparency summary rather than a participant-level statistical analysis."
+    },
+    "S24": {
+      "title": "Sequential screening flow and revision-level availability of reason-specific exclusion information.",
+      "columns": [
+        "Screening stage",
+        "Excluded, n",
+        "Remaining, n",
+        "Reason detail available at revision",
+        "Interpretation"
+      ],
+      "rows": [
+        [
+          "Hospitalizations screened for possible AIS",
+          "—",
+          "4,133",
+          "Starting screened denominator",
+          "Pre-filtered possible-AIS screening pool"
+        ],
+        [
+          "Age <18 years",
+          "2",
+          "4,131",
+          "Reason-specific count retained",
+          "Mutually exclusive sequential exclusion"
+        ],
+        [
+          "AIS not confirmed on diagnostic review",
+          "78",
+          "4,053",
+          "Reason-specific count retained",
+          "Mutually exclusive sequential exclusion"
+        ],
+        [
+          "Pulmonary infection documented before ICU admission",
+          "142",
+          "3,911",
+          "Reason-specific count retained",
+          "Mutually exclusive sequential exclusion"
+        ],
+        [
+          "Grouped early-landmark / severe-comorbidity screening block",
+          "232",
+          "3,679",
+          "Only the grouped total is retained; separate counts for early death/discharge/treatment withdrawal versus severe comorbidity are not recoverable from the revision archive",
+          "Historical grouped screening block; no unsupported subcounts assigned"
+        ],
+        [
+          "Grouped data-quality / repeat-admission screening block",
+          "311",
+          "3,368",
+          "Only the grouped total is retained; separate counts for severe missingness, unrecoverable data-entry error, and repeated ICU admission, including the exact repeat-admission count, are not recoverable from the revision archive",
+          "Historical grouped screening block; no unsupported subcounts assigned"
+        ],
+        [
+          "Final analytic cohort",
+          "—",
+          "3,368",
+          "Participant-level analysis-ready records retained",
+          "Excluded-patient covariates were not retained in the analysis-ready dataset"
+        ]
+      ],
+      "note": "Counts are sequential. The two late grouped exclusion blocks are retained exactly as grouped totals; unsupported mutually exclusive subcounts are not invented."
+    },
+    "S29": {
+      "title": "Operational timing and coding of the 11 predictors in the current primary model.",
+      "columns": [
+        "Predictor",
+        "Operational extraction / coding rule",
+        "Timing detail retained in revision archive"
+      ],
+      "rows": [
+        [
+          "NEU, ×10^9/L",
+          "First available absolute neutrophil count within 48 hours after ICU admission; continuous value.",
+          "Exact specimen-collection timestamp not retained; admission versus later-within-window timing cannot be reconstructed."
+        ],
+        [
+          "LYM, ×10^9/L",
+          "First available absolute lymphocyte count within 48 hours after ICU admission; continuous value.",
+          "Exact specimen-collection timestamp not retained; admission versus later-within-window timing cannot be reconstructed."
+        ],
+        [
+          "FIB, g/L",
+          "First available fibrinogen result within 48 hours after ICU admission; continuous value.",
+          "Exact specimen-collection timestamp not retained; admission versus later-within-window timing cannot be reconstructed."
+        ],
+        [
+          "BUN, mmol/L",
+          "First available blood urea nitrogen result within 48 hours after ICU admission; continuous value.",
+          "Exact specimen-collection timestamp not retained; admission versus later-within-window timing cannot be reconstructed."
+        ],
+        [
+          "LDH, U/L",
+          "First available lactate dehydrogenase result within 48 hours after ICU admission; continuous value.",
+          "Exact specimen-collection timestamp not retained; admission versus later-within-window timing cannot be reconstructed."
+        ],
+        [
+          "TCO2, mmol/L",
+          "First available total carbon dioxide result within 48 hours after ICU admission; continuous value.",
+          "Exact specimen-collection timestamp not retained; admission versus later-within-window timing cannot be reconstructed."
+        ],
+        [
+          "CCI",
+          "Charlson Comorbidity Index derived from admission-record comorbidity information; continuous score.",
+          "Admission-history variable; no within-window treatment duration applies."
+        ],
+        [
+          "Surgery",
+          "Binary: 1 if any surgery was documented during the first 48 hours after ICU admission; 0 otherwise.",
+          "Procedure-specific type, start/end time, and duration were not retained in the analysis-ready field."
+        ],
+        [
+          "Mechanical ventilation",
+          "Binary: 1 if mechanical ventilation was documented at any time during the first 48 hours; 0 otherwise.",
+          "Window-level occurrence only; start/stop time, duration, and active-at-landmark status were not retained. A value of 0 does not exclude later MV."
+        ],
+        [
+          "Intubation/tracheotomy",
+          "Binary: 1 if endotracheal intubation or tracheotomy was documented at any time during the first 48 hours; 0 otherwise.",
+          "Window-level occurrence only; procedure timing beyond the indicator, duration, and active-at-landmark status were not retained. A value of 0 does not exclude later airway support."
+        ],
+        [
+          "Diuretics",
+          "Binary: 1 if diuretic exposure was documented during the first 48 hours; 0 otherwise.",
+          "Window-level medication exposure; exact administration timing and duration were not retained in the analysis-ready field."
+        ]
+      ],
+      "note": "The revision archive retains the extracted first-48-hour values but not exact specimen collection timestamps or detailed treatment durations."
+    },
+    "S31": {
+      "title": "Audit of sparse binary fields and reconciliation of first-48-hour airway predictors with the re-audited VAP subtype.",
+      "columns": [
+        "Audit item",
+        "Archived coding / denominator",
+        "Observed count",
+        "Reconciliation",
+        "Interpretation for revision"
+      ],
+      "rows": [
+        [
+          "Re-audited VAP subtype",
+          "Outcome-positive cases",
+          "334/1,357 (24.6%)",
+          "Corrected from the prior descriptive aggregation error; composite outcome labels were unchanged.",
+          "VAP is a subtype of the same composite endpoint, not a separate model label."
+        ],
+        [
+          "VAP with first-48-hour MV",
+          "334 VAP cases",
+          "72 yes; 262 no",
+          "262 VAP cases had no MV indicator in the predictor window and, under the VAP definition, received qualifying invasive ventilation later in the ICU course.",
+          "Exact post-landmark MV start times were not retained in the revision extract."
+        ],
+        [
+          "VAP with first-48-hour intubation/tracheotomy",
+          "334 VAP cases",
+          "104 yes; 230 no",
+          "230 VAP cases had no airway-procedure indicator in the predictor window and necessarily received the qualifying airway support later in the ICU course.",
+          "Exact post-landmark procedure times were not retained in the revision extract."
+        ],
+        [
+          "VAP with neither early airway indicator",
+          "334 VAP cases",
+          "211 (63.2%)",
+          "Neither first-48-hour MV nor intubation/tracheotomy was positive.",
+          "Demonstrates why Table 1 early-airway counts cannot be used as the denominator for full-course VAP risk."
+        ],
+        [
+          "Mechanical ventilation",
+          "First 48 h, all 3,368 patients",
+          "333 (9.9%); 45 no infection, 288 infection",
+          "Window-level predictor exposure only.",
+          "Not the full-ICU-course ventilation prevalence of the unit."
+        ],
+        [
+          "Intubation/tracheotomy",
+          "First 48 h, all 3,368 patients",
+          "353 (10.5%); 49 no infection, 304 infection",
+          "Window-level predictor exposure only.",
+          "Not the full-ICU-course airway-procedure prevalence of the unit."
+        ],
+        [
+          "Central venous catheter",
+          "First 48 h, all 3,368 patients",
+          "32 (1.0%); 7 no infection, 25 infection",
+          "Window-level predictor exposure only.",
+          "Not the full-stay CVC prevalence."
+        ],
+        [
+          "CRRT",
+          "First 48 h, all 3,368 patients",
+          "12 (0.4%); 4 no infection, 8 infection",
+          "Window-level predictor exposure only.",
+          "Not the full-stay CRRT prevalence."
+        ],
+        [
+          "Recorded heart-disease indicator",
+          "Admission-history archive field",
+          "9 (0.3%); 7 no infection, 2 infection",
+          "The archived field is too sparse to represent all cardiovascular comorbidity and was not used as an atrial-fibrillation surrogate.",
+          "Reported as a sparse structured flag; not part of the current primary 11-predictor set."
+        ],
+        [
+          "Immunosuppressants",
+          "First 48 h / historical candidate inventory",
+          "0/3,368",
+          "Zero variance in the full cohort and original training cohort.",
+          "Historical inclusion was a preprocessing oversight; removed before revision-specific BSA-free LASSO/Boruta."
+        ],
+        [
+          "Cholinesterase inhibitors",
+          "First 48 h / historical candidate inventory",
+          "1/3,368 overall; 0/2,357 in original training",
+          "Zero variance in the fixed original training cohort.",
+          "Historical inclusion was a near-zero-frequency oversight; removed before revision-specific BSA-free LASSO/Boruta."
+        ]
+      ],
+      "note": "Airway/CVC/CRRT/medication counts refer to first-48-hour archived predictor fields, whereas VAP was re-audited using full-course source records; no new full-cohort raw-data re-extraction was performed."
+    }
+  },
+  "figure_S1": {
+    "title": "Flowchart of Patient Inclusion and Exclusion",
+    "stages": [
+      {
+        "label": "Hospitalizations screened for possible AIS",
+        "remaining": 4133,
+        "excluded_label": null,
+        "excluded": null
+      },
+      {
+        "label": "Adults after age screen",
+        "remaining": 4131,
+        "excluded_label": "Age <18 years",
+        "excluded": 2
+      },
+      {
+        "label": "Confirmed AIS",
+        "remaining": 4053,
+        "excluded_label": "AIS not confirmed on diagnostic review",
+        "excluded": 78
+      },
+      {
+        "label": "No pulmonary infection documented before ICU admission",
+        "remaining": 3911,
+        "excluded_label": "Pulmonary infection documented before ICU admission",
+        "excluded": 142
+      },
+      {
+        "label": "After grouped early-landmark / severe-comorbidity screen",
+        "remaining": 3679,
+        "excluded_label": "Grouped early-landmark / severe-comorbidity block",
+        "excluded": 232
+      },
+      {
+        "label": "Final analytic cohort",
+        "remaining": 3368,
+        "excluded_label": "Grouped data-quality / repeat-admission block",
+        "excluded": 311
+      }
+    ],
+    "note": "All patients in the final modeling cohort had ICU length of stay >=48 hours. The 232- and 311-patient blocks are preserved as grouped historical totals because reliable mutually exclusive component counts are unavailable."
+  }
+}

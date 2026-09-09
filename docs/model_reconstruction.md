@@ -177,3 +177,12 @@ Do not commit any patient-level input or generated patient-level output to the p
 - exact patient dates or source medical-record identifiers.
 
 The repository `.gitignore` is intended to prevent accidental upload of these materials.
+
+
+## Final reporting reconstruction module
+
+`code/08_reporting_reconstruction/` contains only aggregate, non-patient-level metadata and reconstructs Tables S1, S3, S4, S16, S17, S24, S29, S31, and Figure S1. These items cannot all be derived de novo from the retained analysis-ready matrix because the pre-imputation raw matrix, excluded-patient covariates, exact sampling timestamps, and reliable reason-specific subcounts within the two historical grouped exclusion blocks are unavailable. The repository therefore preserves the archived aggregate revision metadata explicitly rather than inventing missing patient-level history.
+
+The final Table 1 script also emits Supplementary Table S32 separately, implementing the reviewer-requested move of additional first-48-hour intervention/medication candidate variables out of the concise main table.
+
+See `docs/table_figure_code_map.md` for the complete mapping of every reported main and supplementary table/figure to public code.

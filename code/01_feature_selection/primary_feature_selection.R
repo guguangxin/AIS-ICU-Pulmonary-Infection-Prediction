@@ -837,7 +837,7 @@ cat(
 
 
 # ============================================================
-# 7. 汇总：交集 / 并集 / 旧9变量比较
+# 7. 汇总：交集 / 并集 / 最终推荐
 # ============================================================
 cat("\n========== 7. 结果汇总 ==========\n")
 
@@ -919,63 +919,11 @@ cat(
 )
 cat("  ", paste(final_vars, collapse = ", "), "\n")
 
-# ★ 现行主分析固定9变量（标准缩写）
-ORIGINAL_PRIMARY9 <- c(
-  "NEU",
-  "Intubation",
-  "MV",
-  "LDH",
-  "LYM",
-  "BUN",
-  "CCI",
-  "FIB",
-  "Surgery"
-)
-
-compare_vars <- unique(c(
-  ORIGINAL_PRIMARY9,
-  common_vars
-))
-
-compare_df <- data.frame(
-  Variable = compare_vars,
-  In_current_primary9 = compare_vars %in% ORIGINAL_PRIMARY9,
-  In_reselected_LASSO_Boruta_intersection =
-    compare_vars %in% common_vars,
-  stringsAsFactors = FALSE
-)
-
-compare_df$Status <- ifelse(
-  compare_df$In_current_primary9 &
-    compare_df$In_reselected_LASSO_Boruta_intersection,
-  "Shared",
-  ifelse(
-    compare_df$In_current_primary9,
-    "Current_primary9_only",
-    "Reselected_primary_only"
-  )
-)
-
-write.csv(
-  compare_df,
-  "07_主分析重筛_vs_旧9变量_比较.csv",
-  row.names = FALSE
-)
-
+# Export the current BSA-free LASSO-Boruta intersection.
 write.csv(
   data.frame(Variable = common_vars),
   "06_主分析重筛_LASSO_Boruta_intersection.csv",
   row.names = FALSE
-)
-
-cat(
-  "\n主分析重筛交集与旧9变量完全相同? ",
-  ifelse(
-    setequal(common_vars, ORIGINAL_PRIMARY9),
-    "YES",
-    "NO"
-  ),
-  "\n"
 )
 
 
@@ -1756,17 +1704,6 @@ method_note <- c(
       common_vars,
       collapse = ", "
     )
-  ),
-  paste0(
-    "Identical to legacy constrained 9 predictors: ",
-    ifelse(
-      setequal(
-        common_vars,
-        ORIGINAL_PRIMARY9
-      ),
-      "YES",
-      "NO"
-    )
   )
 )
 
@@ -1825,18 +1762,6 @@ for (v in final_vars) {
   )
 }
 
-cat(
-  "\n主分析重筛交集与旧9变量完全相同? ",
-  ifelse(
-    setequal(
-      common_vars,
-      ORIGINAL_PRIMARY9
-    ),
-    "YES",
-    "NO"
-  ),
-  "\n"
-)
 
 cat("\n所有文件已保存至:\n  ", SAVE_PATH, "\n")
 cat(sep, "\n")
@@ -1849,7 +1774,6 @@ cat("  01_主分析36候选变量_零方差与稀有度核查.csv\n")
 cat("  肺部感染_主分析重筛_LASSO_lambda1se全部系数.csv\n")
 cat("  肺部感染_主分析重筛_Boruta重要性.csv\n")
 cat("  06_主分析重筛_LASSO_Boruta_intersection.csv\n")
-cat("  07_主分析重筛_vs_旧9变量_比较.csv\n")
 cat("  10_Age_LASSO_Boruta诊断.csv\n")
 if (RUN_STABILITY) {
   cat("  08_LASSO_主分析重筛_20次重复稳定性.csv\n")

@@ -2,48 +2,38 @@
 
 ## Current public-repository coverage
 
-The repository now contains public code or reconstruction documentation for the main current and revision-specific analysis modules:
+The repository now contains public generating code or transparent reconstruction code for **all currently reported main and supplementary tables and figures**. The item-level map is `docs/table_figure_code_map.md`.
 
-- Table 1 descriptive/statistical reconstruction;
+Core modules cover:
+
+- final main Table 1 plus the reviewer-requested Supplementary Table S32 split;
 - BSA-free LASSO + Boruta primary feature selection;
 - current 11-predictor eight-model primary analysis;
-- strict cross-fitted threshold derivation within the primary workflow;
-- Platt calibration and primary performance evaluation;
-- focused decision-curve analysis within the primary workflow;
-- current-primary GBDT SHAP interpretation within the primary workflow;
-- Primary11 bootstrap calibration / ECE / MCE / Supplementary Figure S3 workflow;
-- AgeForced12 sensitivity analysis;
-- HAP-only 11-predictor versus 9-predictor airway-removed sensitivity analysis;
-- calendar-time robustness analysis (2020-2023 development versus 2024-2025 later cohort);
-- remaining-ICU-stay / observation-opportunity sensitivity analysis;
-- upstream fitting and downstream fixed-test comparison for the four parsimonious LR comparators;
-- repeated 5 x 5 outer nested validation of the recoverable post-preprocessing pipeline;
-- current 11-predictor base logistic-regression coefficient reconstruction for Supplementary Table S15;
-- historical exploratory BSA-inclusive 10-predictor eight-model reconstruction for Supplementary Figures S4-S5;
-- historical exploratory BSA-inclusive LightGBM SHAP reconstruction for Supplementary Figures S2 and S6;
-- historical-versus-current descriptive reconstruction for Supplementary Tables S11-S12.
+- strict cross-fitted threshold derivation, Platt calibration, fixed-test performance, DeLong/Holm comparison, DCA, PR analysis, and Primary11 GBDT SHAP;
+- bootstrap calibration uncertainty/ECE/MCE and Figure S3;
+- age-forced, HAP-only airway-removed, calendar-time, remaining-ICU-stay, and parsimonious-comparator analyses;
+- repeated 5 x 5 nested validation of the recoverable post-preprocessing pipeline;
+- historical BSA-inclusive 10-predictor performance and SHAP traceability;
+- historical nine-predictor fixed-hyperparameter bootstrap-optimism traceability;
+- aggregate reporting reconstruction for historical missingness/selection tables, score-component availability, transparency summary, screening flow, predictor timing/coding, sparse-field/VAP audit, and Figure S1.
 
-## Historical BSA-inclusive scope
+## Data and privacy boundary
 
-The BSA-inclusive analyses are retained as historical exploratory analyses. Their predictor composition differs from the current 11-predictor primary analysis by more than BSA alone, so Tables S11-S12 are descriptive model-set contrasts rather than isolated tests of the incremental value of BSA. The public scripts preserve the archived historical workflow and replace workstation-specific absolute paths with portable local paths. Patient-level inputs and outputs are not distributed.
+No participant-level CSV/Excel file, row-level prediction output, source medical record, exact patient-level date, or model checkpoint is required to be committed publicly. Fitted objects are reconstructable from the authorized analysis-ready dataset using the public code and machine-readable environment.
 
-## Parsimonious comparator reconstruction
+## Historical/reconstruction labeling
 
-The public repository now includes both stages of the parsimonious analysis:
+Historical BSA-inclusive and earlier nine-predictor outputs remain clearly labeled as historical/exploratory or traceability analyses. Aggregate reporting tables that cannot be regenerated from the retained completed participant matrix are reconstructed from version-controlled non-patient-level revision metadata; unavailable raw history is not inferred.
 
-1. `parsimonious_comparator_training.py` reconstructs the four simple LR specifications from an authorized analysis-ready cohort using the fixed original split, training-derived min-max scaling for continuous variables, 10-fold stratified Bayesian tuning of L2 logistic regression, and 10-fold Platt calibration.
-2. `parsimonious_comparator.py` reproduces fixed-test AUC/AP/Brier summaries, paired bootstrap differences, paired DeLong tests, and Holm adjustment from the locked comparator prediction file.
+## Known reproducibility limitation
 
-The four specifications are MV + intubation/tracheotomy, NLR alone (NEU/LYM), age + sex as a component-level floor, and NEU + LYM + MV. The age-sex model is not presented as a reconstructed A2DS2 or ISAN score.
+The pre-imputation/raw uncapped predictor matrix was not retained in the revision archive. Therefore, repeated nested validation does not re-estimate imputation models or winsorization limits within outer folds and is correctly described as validation of the recoverable post-preprocessing pipeline.
 
-## Historical nine-predictor optimism traceability (Supplementary Table S14)
+## Release-readiness checks still requiring the repository owner
 
-Supplementary Table S14 is now covered by `code/07_historical_nine_predictor_traceability/`. The public script is deliberately labeled as a **reconstruction**, not as the recovered original generation script. It reconstructs the archived 1,000-resample fixed-hyperparameter bootstrap optimism procedure for the earlier nine-predictor GBDT and LightGBM base estimators.
+Before freezing `v1.0.0`:
 
-The reconstruction uses the previously selected hyperparameter values retained in the archived Supplementary Table S2. The full-precision historical `BayesSearchCV.best_params_` export was not located; several continuous selected values are therefore available only at the precision displayed in the archived table. Small numerical differences caused by parameter rounding and software-version differences are expected and are documented rather than hidden. Archived S14 values are used only as QA anchors and do not generate the reconstructed estimates.
-
-This historical analysis is retained solely for traceability and is **not** used as an uncertainty estimate for the current 11-predictor primary analysis.
-
-## Release readiness
-
-The previously identified public-code gaps now have either repository-facing analysis scripts or explicit reconstruction instructions. Before creating the final GitHub Release / Zenodo archive, perform one repository-level audit for: directory structure, accidental patient-level files, workstation-specific absolute paths, syntax/smoke-test status, and consistency of the README, Data Availability statement, reviewer response, and Supplementary Table S17.
+1. run the two R scripts once under R 4.5.1 / Boruta 9.0.0 to confirm local execution;
+2. verify the public GitHub tree contains no patient-level files, cache directories, or workstation-specific paths;
+3. confirm `README.md`, `CITATION.cff`, `environment.yml`, and this inventory are the latest versions;
+4. create the versioned release and archival DOI, then insert the persistent identifier into the manuscript Data Availability statement and reviewer response.
