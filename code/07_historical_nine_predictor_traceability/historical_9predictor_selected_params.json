@@ -1,0 +1,24 @@
+{
+  "provenance": "Displayed selected hyperparameter values retained in the archived Supplementary Table S2 for the historical nine-predictor analysis. Continuous values are rounded to the precision shown in that table; if a full-precision archived best_params_ export is available, pass it with --params-json for the closest numerical reproduction.",
+  "GBDT": {
+    "n_estimators": 280,
+    "max_depth": 4,
+    "learning_rate": 0.0135,
+    "min_samples_split": 5,
+    "min_samples_leaf": 20,
+    "subsample": 0.7,
+    "max_features": "sqrt"
+  },
+  "LightGBM": {
+    "n_estimators": 263,
+    "max_depth": 3,
+    "learning_rate": 0.0213,
+    "num_leaves": 26,
+    "min_child_samples": 37,
+    "reg_alpha": 0.0526,
+    "reg_lambda": 0.0930,
+    "feature_fraction": 0.5038,
+    "bagging_fraction": 0.5534,
+    "bagging_freq": 5
+  }
+}
