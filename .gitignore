@@ -250,3 +250,37 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+# ============================================================
+# Restricted patient-level data and local analysis outputs
+# ============================================================
+
+# Patient-level data
+*.csv
+*.xlsx
+*.xls
+
+# Serialized models / checkpoints
+*.pkl
+*.joblib
+
+# Local result folders
+outputs/
+results/
+checkpoints/
+restricted_data/
+private_data/
+data/raw/
+data/private/
+
+# Python temporary files
+__pycache__/
+*.pyc
+
+# R temporary/session files
+.Rhistory
+.RData
+.Rproj.user/
+
+# Operating-system files
+.DS_Store
+Thumbs.db
