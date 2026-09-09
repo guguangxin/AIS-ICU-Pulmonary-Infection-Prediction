@@ -124,9 +124,21 @@ Repository-facing scripts are under `code/03_sensitivity_analyses/`:
 - HAP-only 11-predictor versus 9-predictor airway-removed analysis;
 - 2020-2023 versus 2024-2025 temporal robustness analysis;
 - remaining-ICU-stay observation-opportunity analysis;
-- downstream parsimonious-comparator comparison.
+- upstream reconstruction of the four parsimonious LR comparators;
+- downstream parsimonious-comparator fixed-test comparison.
+
+For the parsimonious analysis, run `parsimonious_comparator_training.py` first when an authorized analysis-ready cohort is available, then use `parsimonious_comparator.py` for the reported paired fixed-test comparisons. The four simple specifications are MV + intubation/tracheotomy, NLR alone (`NEU / LYM`), age + sex as a component-level floor, and NEU + LYM + MV. Continuous variables are min-max scaled using training-set parameters only; L2 logistic regression is tuned with 10-fold stratified Bayesian cross-validation and followed by 10-fold Platt calibration in training.
 
 See the README in that directory for required restricted inputs and environment variables.
+
+
+## Historical exploratory BSA-inclusive reconstruction
+
+Repository-facing historical scripts are under `code/06_historical_bsa_inclusive/`. They reconstruct the archived 10-predictor BSA-inclusive eight-model analysis, the historical LightGBM SHAP figures, and the descriptive BSA-inclusive-versus-current Table S11/S12 comparisons.
+
+These analyses are historical and exploratory. The BSA-inclusive 10-predictor set and the current 11-predictor BSA-free set differ by more than BSA alone, so the comparison is descriptive and must not be interpreted as an isolated incremental-BSA or causal-antibiotic effect.
+
+The public historical scripts preserve the archived workflow while replacing workstation-specific absolute paths. Patient-level data, patient-level predictions, and fitted model objects are not distributed publicly.
 
 ## Repeated nested resampling
 
