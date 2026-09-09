@@ -216,3 +216,37 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# ============================================================
+# Restricted patient-level / analysis outputs
+# ============================================================
+
+# Patient-level datasets
+*.csv
+*.xlsx
+*.xls
+
+# Serialized models / checkpoints
+*.pkl
+*.joblib
+
+# Local analysis outputs
+checkpoints/
+outputs/
+results/
+restricted_data/
+private_data/
+data/raw/
+data/private/
+
+# Python temporary files
+__pycache__/
+*.pyc
+
+# R temporary/session files
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS files
+.DS_Store
+Thumbs.db
