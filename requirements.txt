@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+matplotlib
+joblib
+scikit-learn==1.6.1
+scikit-optimize==0.10.2
+lightgbm==4.6.0
+xgboost==3.2.0
+shap==0.51.0
+statsmodels==0.14.4

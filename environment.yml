@@ -1,0 +1,23 @@
+name: ais-icu-pulmonary-infection
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13.5
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - joblib
+  - pip
+  - r-base=4.5.1
+  - r-glmnet=4.1_10
+  - r-caret
+  - r-proc
+  - r-ranger=0.17.0
+  - pip:
+      - scikit-learn==1.6.1
+      - scikit-optimize==0.10.2
+      - lightgbm==4.6.0
+      - xgboost==3.2.0
+      - shap==0.51.0
+      - statsmodels==0.14.4
