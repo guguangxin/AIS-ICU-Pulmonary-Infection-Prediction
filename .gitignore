@@ -217,53 +217,31 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 # ============================================================
-# Restricted patient-level / analysis outputs
-# ============================================================
-
-# Patient-level datasets
-*.csv
-*.xlsx
-*.xls
-
-# Serialized models / checkpoints
-*.pkl
-*.joblib
-
-# Local analysis outputs
-checkpoints/
-outputs/
-results/
-restricted_data/
-private_data/
-data/raw/
-data/private/
-
-# Python temporary files
-__pycache__/
-*.pyc
-
-# R temporary/session files
-.Rhistory
-.RData
-.Rproj.user/
-
-# OS files
-.DS_Store
-Thumbs.db
-# ============================================================
 # Restricted patient-level data and local analysis outputs
 # ============================================================
 
-# Patient-level data
+# Participant-level datasets and common clinical-data formats
 *.csv
+*.tsv
 *.xlsx
 *.xls
+*.parquet
+*.feather
+*.sav
+*.dta
 
-# Serialized models / checkpoints
+# R data objects
+*.rds
+*.RDS
+*.rda
+*.RData
+
+# Serialized fitted models / checkpoints
 *.pkl
+*.pickle
 *.joblib
 
-# Local result folders
+# Local analysis outputs
 outputs/
 results/
 checkpoints/
@@ -272,13 +250,17 @@ private_data/
 data/raw/
 data/private/
 
+# Local patient-level prediction / model-output directories
+predictions/
+patient_level_outputs/
+shap_outputs/
+
 # Python temporary files
 __pycache__/
 *.pyc
 
 # R temporary/session files
 .Rhistory
-.RData
 .Rproj.user/
 
 # Operating-system files
