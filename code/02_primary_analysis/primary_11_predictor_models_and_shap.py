@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# v5: AUC彩带最低色阶增强（0.824/0.827等最低值不再与白底融合）；其余建模、统计与SHAP流程保持v4不变。
+# v6: Figure 2B/测试集ROC-AUC彩带改为直接显示当前校准后预测概率计算的AUC点估计（4位小数），不再读取bootstrap均值；其余建模、统计与SHAP流程不变。
+# v5: AUC彩带最低色阶增强（最低值不再与白底融合）；其余建模、统计与SHAP流程保持v4不变。
 """
 Created on Sat Aug  8 22:25:38 2026
 
@@ -52,9 +53,9 @@ Created on Tue Apr 21 2026
 """
 肺部感染预测 - 机器学习分类分析（8模型 · 11特征 · Platt校准 + 严格cross-fit阈值 + SHAP完整版）
 ======================================================================
-  · Input dataset : supplied locally by the authorized analyst; not included in this public repository
-  · Expected file   : BSAfree_feature_selection_input_exactsplit.csv
-  · Output directory: set by AIS_ICU_OUTPUT_DIR or defaults to ./outputs/primary_analysis
+  · 数据路径 : E:\新建文件夹\第三次修稿
+  · 文件名   : BSAfree_feature_selection_input_exactsplit.csv
+  · 输出目录 : E:\新建文件夹\第三次修稿\主分析11变量_八模型完整重跑_SHAP
   · 结局     : Pulmonary_infection
   · 预测变量（11个，审稿后主分析重筛）:
       NEU(NEUT_abs), Intubation(Intubation_tracheotomy), MV(Mechanical_ventilation),
@@ -153,21 +154,12 @@ plt.rcParams['xtick.major.size']      = 6
 plt.rcParams['ytick.major.size']      = 6
 print(f"📦 sklearn version: {sklearn.__version__}")
 
-# ★★★ Repository-safe path configuration ★★★
-# The participant-level dataset is not distributed publicly.
-# Provide the local authorized file via environment variable AIS_ICU_DATA_FILE,
-# or place it under ./data/BSAfree_feature_selection_input_exactsplit.csv.
-# The input file must retain the fixed original Train/Test identity column: Primary_split.
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-data_file = os.environ.get(
-    "AIS_ICU_DATA_FILE",
-    os.path.join(REPO_ROOT, "data", "BSAfree_feature_selection_input_exactsplit.csv")
-)
-output_path = os.environ.get(
-    "AIS_ICU_OUTPUT_DIR",
-    os.path.join(REPO_ROOT, "outputs", "primary_analysis")
-)
-ckpt_dir = os.path.join(output_path, "checkpoints")
+# ★★★ 路径：审稿后 11 变量主分析 ★★★
+# 输入文件必须保留原始主分析固定 Train/Test 身份（Primary_split）。
+data_path   = r"E:\新建文件夹\第三次修稿"
+data_file   = os.path.join(data_path, "BSAfree_feature_selection_input_exactsplit.csv")
+output_path = os.path.join(data_path, "主分析11变量_八模型完整重跑_SHAP")
+ckpt_dir    = os.path.join(output_path, "checkpoints")
 os.makedirs(output_path, exist_ok=True)
 os.makedirs(ckpt_dir, exist_ok=True)
 
@@ -1881,55 +1873,31 @@ _ROC_RADAR_RC = {
 # ============================================================
 # 图14 / 图15: ROC曲线 + 右侧 AUC 彩带（测试集 / 训练集）
 # ============================================================
-def plot_roc_with_auc_bar(y_true, probas_dict, title, save_name,
-                          metrics_csv_path=None):
+def plot_roc_with_auc_bar(y_true, probas_dict, title, save_name):
     """
-    左侧 ROC 曲线 + 右侧模型色块 + AUC 彩色条带（Blues 渐变）
-    按 AUC 降序排列。
+    左侧 ROC 曲线 + 右侧模型色块 + AUC 彩色条带（Blues 渐变），
+    按当前数据集的 AUC 点估计降序排列。
 
-    ┌─────────────────────────────────────────────────────────────────┐
-    │ 关键修改：当传入 metrics_csv_path 时，右侧彩带显示的 AUC 数字     │
-    │ 与排序均直接从 CSV（bootstrap 均值表）读取，确保与结果表完全一致。│
-    │ ROC 曲线形状仍由真实概率绘出（不变）。                            │
-    └─────────────────────────────────────────────────────────────────┘
+    重要：右侧 AUC 数字直接由传入的 y_true 与校准后预测概率 probas_dict
+    计算（roc_auc_score），与主分析点估计使用同一概率来源；不再从
+    bootstrap 95%区间 CSV 中读取 bootstrap 均值。这样可避免图中 AUC
+    标签与 Table S13 / “模型评估_*_点估计.csv”不一致。
     """
     model_order = list(probas_dict.keys())
-
-    # ── 若指定了 CSV，则建立 {内部key: bootstrap均值AUC} 映射 ──
-    auc_from_csv = None
-    if metrics_csv_path is not None and os.path.exists(metrics_csv_path):
-        df_m = pd.read_csv(metrics_csv_path, encoding='utf-8-sig')
-        df_m.columns = df_m.columns.str.replace('\ufeff', '').str.strip()
-
-        def _strip_ci(s):
-            m = re.match(r'\s*([\d.]+)', str(s))
-            return float(m.group(1)) if m else np.nan
-
-        # CSV 用全名（如 "Random Forest"），probas_dict 用缩写键（如 "RF"），
-        # 借助 MODEL_FULL_NAME 反查
-        full_to_auc = {row['Model']: _strip_ci(row['AUC'])
-                       for _, row in df_m.iterrows()}
-        auc_from_csv = {}
-        for k in model_order:
-            full = MODEL_FULL_NAME.get(k, k)
-            if full in full_to_auc and not np.isnan(full_to_auc[full]):
-                auc_from_csv[k] = full_to_auc[full]
-        print(f"  📋 [{save_name}] AUC 数字与排序读取自 CSV "
-              f"({len(auc_from_csv)}/{len(model_order)} 模型匹配成功)")
 
     roc_data = []
     for name in model_order:
         fpr, tpr, _ = roc_curve(y_true, probas_dict[name])
-        # 优先使用 CSV 里的 bootstrap 均值 AUC（与结果表对齐）
-        if auc_from_csv is not None and name in auc_from_csv:
-            auc_val = auc_from_csv[name]
-        else:
-            auc_val = roc_auc_score(y_true, probas_dict[name])
+        # Canonical AUC point estimate: exactly the same definition used in calculate_metrics().
+        auc_val = float(roc_auc_score(y_true, probas_dict[name]))
         roc_data.append({
             'name': name, 'fpr': fpr, 'tpr': tpr,
-            'auc':  auc_val,
+            'auc': auc_val,
         })
     roc_sorted = sorted(roc_data, key=lambda d: d['auc'], reverse=True)
+
+    print(f"  📌 [{save_name}] AUC彩带使用当前校准后预测概率的point estimate；"
+          f"不使用bootstrap均值。")
 
     fig = plt.figure(figsize=(14, 8.5), facecolor='white')
     gs  = gridspec.GridSpec(1, 2, width_ratios=[4, 1], wspace=0.10)
@@ -1947,7 +1915,8 @@ def plot_roc_with_auc_bar(y_true, probas_dict, title, save_name,
     ax1.set_ylabel("True Positive Rate (Sensitivity)",
                    fontsize=ROC_FS_AXIS_LABEL, fontweight='bold')
     # 标题已按要求删除
-    ax1.legend(loc='lower right', fontsize=ROC_FS_LEGEND, frameon=False, prop={'weight': 'bold', 'size': ROC_FS_LEGEND})
+    ax1.legend(loc='lower right', fontsize=ROC_FS_LEGEND, frameon=False,
+               prop={'weight': 'bold', 'size': ROC_FS_LEGEND})
     ax1.tick_params(axis='both', labelsize=ROC_FS_TICK)
     for lb in ax1.get_xticklabels() + ax1.get_yticklabels():
         lb.set_fontweight('bold')
@@ -1959,10 +1928,7 @@ def plot_roc_with_auc_bar(y_true, probas_dict, title, save_name,
     norm = Normalize(vmin=min(aucs) - 1e-6, vmax=max(aucs) + 1e-6)
     cmap_auc = plt.cm.Blues
 
-    # AUC彩带颜色增强：避免最小AUC映射到Blues最浅端而与白色背景融为一体。
-    # 保留AUC相对排序和连续渐变，仅把色阶使用范围从[0, 1]压缩到
-    # [AUC_CMAP_FLOOR, 1]。因此最低值（如0.824/0.827）仍然是最浅色，
-    # 但会保持清晰可见；最高值仍使用Blues最深端。
+    # AUC彩带颜色增强：最低AUC仍为最浅色，但不会与白底融合。
     AUC_CMAP_FLOOR = 0.28
 
     bar_h, gap = 0.85, 0.10
@@ -1974,16 +1940,14 @@ def plot_roc_with_auc_bar(y_true, probas_dict, title, save_name,
         ax2.add_patch(plt.Rectangle((0.0, y_bot), 0.45, bar_h,
                                     facecolor=get_color(rd['name']),
                                     edgecolor='white', linewidth=1.5))
-        # 右色块：增强后的Blues渐变。
-        # 原始norm最低值=0会得到接近白色；这里抬高到0.28，
-        # 同时保持最高值=1以及中间值的相对梯度。
+        # 右色块：增强后的Blues渐变
         auc_norm = float(norm(rd['auc']))
         auc_level = AUC_CMAP_FLOOR + (1.0 - AUC_CMAP_FLOOR) * auc_norm
         auc_color = cmap_auc(auc_level)
         ax2.add_patch(plt.Rectangle((0.50, y_bot), 0.50, bar_h,
                                     facecolor=auc_color,
                                     edgecolor='#B7C3CE', linewidth=1.2))
-        # AUC 数字：深底白字，浅底黑字
+        # AUC 数字：显示4位小数，直接与Table S13点估计对齐
         lightness = (auc_color[0]*299 + auc_color[1]*587 + auc_color[2]*114) / 1000
         txt_color = 'white' if lightness < 0.55 else '#1C1C1C'
         ax2.text(0.75, y_center, f"{rd['auc']:.3f}",
@@ -2000,22 +1964,18 @@ def plot_roc_with_auc_bar(y_true, probas_dict, title, save_name,
 # —— 图14 / 图15 / 图16: 在 rc_context 内绘制（样式完全对齐独立脚本）——
 with plt.rc_context(_ROC_RADAR_RC):
     # 图14: 测试集 ROC+AUC 彩带
-    # ★ 传入测试集 CSV 路径，使右侧彩带 AUC 数字与排序与结果表完全一致
+    # AUC数字与排序直接使用当前校准后测试概率计算的point estimate，
+    # 与Table S13/模型评估_测试集_点估计.csv保持同一统计定义。
     plot_roc_with_auc_bar(
         y_test.values, test_probas,
         title='ROC Curve — Test Set Model Comparison',
-        save_name='ROC曲线_AUC彩带_测试集.png',
-        metrics_csv_path=os.path.join(output_path,
-                                      '模型评估_测试集_95置信区间.csv'))
+        save_name='ROC曲线_AUC彩带_测试集.png')
 
     # 图15: 训练集 ROC+AUC 彩带
-    # ★ 传入训练集 CSV 路径，使右侧彩带 AUC 数字与排序与结果表完全一致
     plot_roc_with_auc_bar(
         y_train.values, train_probas,
         title='ROC Curve — Training Set Model Comparison',
-        save_name='ROC曲线_AUC彩带_训练集.png',
-        metrics_csv_path=os.path.join(output_path,
-                                      '模型评估_训练集_95置信区间.csv'))
+        save_name='ROC曲线_AUC彩带_训练集.png')
 
 # ============================================================
 # 图16: 圆盘放射图（8 模型 × 5 指标）
@@ -3331,6 +3291,48 @@ if RUN_SHAP:
         FRAME_COLOR = '#CCCCCC'
         FRAME_LW    = 0.8
 
+        # ---- 图12 专用排版微调（保留原配色） ----
+        SHAP12_XLIM_LEFT   = -0.82   # 减少左侧空白，让左侧变量名更贴近主图
+        SHAP12_XLIM_RIGHT  = n + 0.95
+        # 最后一行中心在 -(n-1)，不是 -n；原先写成 -n-0.45 会白白多留约1个单元格高度。
+        SHAP12_YLIM_BOTTOM = -(n - 1) - CELL_SIZE / 2 - 0.08
+        SHAP12_YLIM_TOP    = 1.42
+        SHAP12_Y_TICK_PAD  = -10     # 左侧变量名再向主图靠近一点
+
+        # 主图继续下移；colorbar 同时上移，二者主动靠近。
+        SHAP12_SUBPLOTS = dict(left=0.10, right=0.965, top=0.895, bottom=0.145)
+        SHAP12_CBAR_MAIN_BBOX  = [0.14, 0.078, 0.34, 0.024]
+        SHAP12_CBAR_INTER_BBOX = [0.54, 0.078, 0.34, 0.024]
+
+        # 斜标签：让“首字母/起始位置”大致位于对应对角方块的居中上方。
+        # Intubation 额外右移，避免与主图重叠。
+        SHAP12_LABEL_DX = {
+            'NEU': 0.03,
+            'Intubation': 0.18,
+            'MV': 0.07,
+            'LDH': 0.06,
+            'LYM': 0.05,
+            'BUN': 0.06,
+            'CCI': 0.06,
+            'FIB': 0.07,
+            'Surgery': 0.09,
+            'Diuretics': 0.11,
+            'TCO2': 0.11,
+        }
+        SHAP12_LABEL_DY = {
+            'NEU': 0.11,
+            'Intubation': 0.13,
+            'MV': 0.12,
+            'LDH': 0.12,
+            'LYM': 0.12,
+            'BUN': 0.12,
+            'CCI': 0.12,
+            'FIB': 0.12,
+            'Surgery': 0.12,
+            'Diuretics': 0.12,
+            'TCO2': 0.12,
+        }
+
         for i in range(n):
             for j in range(n):
                 if j > i:
@@ -3360,43 +3362,47 @@ if RUN_SHAP:
                 ax.add_patch(rect)
 
         for i, lab in enumerate(display_names):
-            x_text = i + 0.15
-            y_text = -i + CELL_SIZE / 2 + 0.10
-            ax.text(x_text, y_text, lab, rotation=45, ha='center', va='bottom',
+            x_text = i + SHAP12_LABEL_DX.get(lab, 0.06)
+            y_text = -i + CELL_SIZE / 2 + SHAP12_LABEL_DY.get(lab, 0.12)
+            ax.text(x_text, y_text, lab,
+                    rotation=45,
+                    ha='left', va='bottom',
+                    rotation_mode='anchor',
                     fontsize=MATRIX_FS_DIAG_LABEL, fontweight='bold')
 
-        ax.set_xlim(-1.2, n + 0.5)
-        ax.set_ylim(-n - 0.5, 1.2)
+        ax.set_xlim(SHAP12_XLIM_LEFT, SHAP12_XLIM_RIGHT)
+        ax.set_ylim(SHAP12_YLIM_BOTTOM, SHAP12_YLIM_TOP)
         ax.set_aspect('equal')
         ax.set_xticks([])
         ax.set_yticks([-i for i in range(n)])
         ax.set_yticklabels(display_names, fontsize=MATRIX_FS_Y_LABEL, fontweight='bold')
         for s in ['top', 'right', 'bottom', 'left']:
             ax.spines[s].set_visible(False)
-        ax.tick_params(axis='y', length=0, pad=MATRIX_Y_TICK_PAD)
+        ax.tick_params(axis='y', length=0, pad=SHAP12_Y_TICK_PAD)
 
         sm_main  = ScalarMappable(norm=norm_main,  cmap=cmap_main);  sm_main.set_array([])
         sm_inter = ScalarMappable(norm=norm_inter, cmap=cmap_inter); sm_inter.set_array([])
 
-        cax1 = fig.add_axes(SHAP_CBAR_MAIN_BBOX)
-        cb1  = plt.colorbar(sm_main,  cax=cax1, orientation='horizontal')
-        cb1.ax.tick_params(labelsize=MATRIX_FS_CBAR_TICK)
-        for lb in cb1.ax.get_xticklabels(): lb.set_fontweight('bold')
-        fig.text(SHAP_CBAR_MAIN_BBOX[0] + SHAP_CBAR_MAIN_BBOX[2] / 2, SHAP_CBAR_LABEL_Y,
-                 'Main Effect |SHAP|',
-                 ha='center', va='center',
-                 fontsize=MATRIX_FS_CBAR_LABEL, fontweight='bold')
+        cax1 = fig.add_axes(SHAP12_CBAR_MAIN_BBOX)
+        cb1  = plt.colorbar(sm_main, cax=cax1, orientation='horizontal')
+        cb1.ax.tick_params(labelsize=MATRIX_FS_CBAR_TICK, pad=3)
+        for lb in cb1.ax.get_xticklabels():
+            lb.set_fontweight('bold')
+        # 标题放在色条上方，刻度仍在下方：彻底避免标题与刻度数字重叠。
+        cb1.ax.set_title('Main Effect |SHAP|',
+                         fontsize=MATRIX_FS_CBAR_LABEL,
+                         fontweight='bold', pad=7)
 
-        cax2 = fig.add_axes(SHAP_CBAR_INTER_BBOX)
+        cax2 = fig.add_axes(SHAP12_CBAR_INTER_BBOX)
         cb2  = plt.colorbar(sm_inter, cax=cax2, orientation='horizontal')
-        cb2.ax.tick_params(labelsize=MATRIX_FS_CBAR_TICK)
-        for lb in cb2.ax.get_xticklabels(): lb.set_fontweight('bold')
-        fig.text(SHAP_CBAR_INTER_BBOX[0] + SHAP_CBAR_INTER_BBOX[2] / 2, SHAP_CBAR_LABEL_Y,
-                 'Interaction Effect |SHAP|',
-                 ha='center', va='center',
-                 fontsize=MATRIX_FS_CBAR_LABEL, fontweight='bold')
+        cb2.ax.tick_params(labelsize=MATRIX_FS_CBAR_TICK, pad=3)
+        for lb in cb2.ax.get_xticklabels():
+            lb.set_fontweight('bold')
+        cb2.ax.set_title('Interaction Effect |SHAP|',
+                         fontsize=MATRIX_FS_CBAR_LABEL,
+                         fontweight='bold', pad=7)
 
-        plt.subplots_adjust(left=0.10, right=0.96, top=0.92, bottom=0.26)
+        plt.subplots_adjust(**SHAP12_SUBPLOTS)
         save_shap_fig('图12_SHAP主效应与交互效应矩阵.png')
         plt.close()
 
