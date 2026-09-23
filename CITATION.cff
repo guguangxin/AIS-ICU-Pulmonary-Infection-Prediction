@@ -2,7 +2,8 @@ cff-version: 1.2.0
 message: "If you use this repository, please cite the software release and the associated manuscript."
 title: "AIS-ICU-Pulmonary-Infection-Prediction"
 type: software
-version: 1.0.0
+version: 1.1.0
+
 authors:
   - family-names: Gu
     given-names: Guangxin
@@ -20,8 +21,11 @@ authors:
     given-names: Xuelian
   - family-names: Wang
     given-names: Sha
+
 repository-code: "https://github.com/guguangxin/AIS-ICU-Pulmonary-Infection-Prediction"
+
 license: MIT
+
 keywords:
   - acute ischemic stroke
   - intensive care unit
