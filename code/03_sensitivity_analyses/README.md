@@ -2,7 +2,7 @@
 
 This directory contains repository-facing copies of revision-specific sensitivity and robustness analyses for the current 11-predictor primary analysis.
 
-These analyses were performed to address reviewer questions regarding model parsimony, nonlinear functional form, the age-adjusted Charlson Comorbidity Index (CCI), pneumonia subtype, unequal observation opportunity, and calendar-time robustness. Unless otherwise stated, they are post hoc analyses and were not used to redefine the locked primary predictor set on the basis of fixed-test performance.
+These analyses were performed to address reviewer questions regarding model parsimony, nonlinear functional form, the age-adjusted Charlson Comorbidity Index (CCI), pneumonia subtype, unequal observation opportunity, temporal separation around the 48-hour landmark, and calendar-time robustness. Unless otherwise stated, they are post hoc analyses and were not used to redefine the locked primary predictor set on the basis of fixed-test performance.
 
 ## Scripts
 
@@ -95,6 +95,30 @@ Available mortality information records in-hospital death but does not establish
 
 ---
 
+### `day3_temporal_sensitivity_reproducible.py`
+
+Performs the hour-level temporal-separation audit and ICU-day-3 exclusion sensitivity analysis reported in Supplementary Table S35.
+
+The script combines the locked analysis-ready modeling matrix with the archived timing dataset and verifies that qualifying pulmonary-infection events in the final analytic cohort occurred strictly after the 48-hour landmark and before ICU exit.
+
+Qualifying events are summarized according to elapsed time from ICU admission as:
+
+- ICU day 3: >48 to <72 hours;
+- ICU day 4: 72 to <96 hours; and
+- ICU day 5+: >=96 hours.
+
+The script also summarizes the number of pulmonary-infection events among patients with exactly 0 recorded remaining ICU days and among those with 0-1 recorded remaining ICU days. The archived `ICU_LOS_days` variable is integer day-based, so 0 recorded remaining days does not imply zero elapsed post-landmark observation time.
+
+For the reviewer-requested ICU-day-3 exclusion sensitivity analysis, patients with a qualifying positive event during >48 to <72 hours are removed from both the original training and fixed test partitions. The locked 11-predictor LR and GBDT specifications and previously selected hyperparameters are retained. Continuous-variable scaling, model fitting, and 10-fold Platt calibration are then refitted using the reduced training partition before evaluation in the corresponding reduced fixed test partition.
+
+The script additionally performs a locked-prediction subset check in which the original primary model predictions are retained and ICU-day-3-positive patients are removed only from the fixed test evaluation subset.
+
+Reported outputs include event-timing summaries, AUC with bootstrap confidence intervals, average precision, Brier score, calibration intercept, and calibration slope.
+
+This analysis addresses temporal proximity between the first-48-hour predictor window and early post-landmark pneumonia documentation. It does not establish the exact biological onset of infection or exclude incipient infection already developing at the 48-hour landmark.
+
+---
+
 ### `temporal_robustness.py`
 
 Performs a calendar-time robustness analysis using:
@@ -139,3 +163,4 @@ By default, scripts look for restricted inputs under:
 
 ```text
 <repository>/restricted_data/
+```
